@@ -1,0 +1,37 @@
+// Problem: Second Largest
+// Platform: GeeksforGeeks
+// Link: https://www.geeksforgeeks.org/problems/second-largest3735/1
+// Category: Arrays
+// Difficulty: Easy
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+// Approach: Two-Pass Max Tracking
+// - First pass: find the maximum element in the array (max).
+// - Second pass: find the largest element that is strictly smaller than max.
+// - Track this second largest using 'sec' and update it whenever arr[i] < max and >= current second largest.
+// - If no valid second largest exists (all elements equal to max), return -1.
+// - Logic works because array contains positive integers and comparisons remain consistent.
+
+class Solution {
+    public int getSecondLargest(int[] arr) {
+        // code here
+        int n=arr.length;
+        int max=0,min=0;
+        for(int i=0;i<n;i++){
+            if(arr[i]>max){
+                max=arr[i];
+            }
+        }
+        int sec=0;
+        for(int i=0;i<n;i++){
+            if(arr[i]<max && arr[i]>=min){
+                sec=arr[i];
+                min=sec;
+            }
+        }
+        if(sec==0){
+            return -1;
+        }
+        return sec;
+    }
+}
