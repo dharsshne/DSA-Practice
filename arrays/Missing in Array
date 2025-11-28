@@ -1,0 +1,26 @@
+// Problem: Missing in Array
+// Platform: GeeksforGeeks
+// Link: https://www.geeksforgeeks.org/problems/missing-number-in-array1416/1?page=1&sortBy=submissions
+// Category: Arrays
+// Difficulty: Easy
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+// Approach: Incremental Summation
+// - Initialize ogsum as n+1 (the next number after array size).
+// - For each i, add (i+1) to ogsum to build full sum of numbers 1 to n+1.
+// - Simultaneously accumulate actual sum of array elements.
+// - Missing number = ogsum - sum.
+
+class Solution {
+    int missingNum(int arr[]) {
+        // code here
+        int n=arr.length;
+        int sum=0,ogsum=n+1;
+        for(int i=0;i<n;i++){
+            ogsum+=i+1;
+            sum+=arr[i];
+        }
+        int res=ogsum-sum;
+        return res;
+    }
+}
