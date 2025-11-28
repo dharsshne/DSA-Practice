@@ -2,6 +2,7 @@
 // Platform: GeeksforGeeks
 // Link: https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&sortBy=submissions
 // Category: Arrays
+// Difficulty: Medium
 // Time Complexity: O(n)
 // Space Complexity: O(1)
 // Approach: Sliding Window (works because array contains non-negative integers)
