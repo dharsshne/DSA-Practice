@@ -1,0 +1,32 @@
+// Problem: Indexes of Subarray With Given target sum
+// Platform: GeeksforGeeks
+// Link: https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&sortBy=submissions
+// Category: Arrays
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+// Approach: Sliding Window (works because array contains non-negative integers)
+// - We maintain a window [start ... end] and move 'end' forward.
+// - If the window sum exceeds target, we shrink from 'start'.
+// - When sum == target → return 1-based indexes.
+// - If no subarray matches, return [-1].
+
+class Solution {
+    static ArrayList<Integer> subarraySum(int[] arr, int target) {
+        ArrayList<Integer> arr1=new ArrayList<>();
+        int n=arr.length;
+        int start=0,sum=0;
+        for(int end=0;end<n;end++){
+            sum+=arr[end];
+            while(sum>target){
+               sum-=arr[start++];
+            }
+            if(sum==target){
+                arr1.add(start+1);
+                arr1.add(end+1);
+                return arr1;
+            }
+        }
+        arr1.add(-1);
+        return arr1;
+    }
+}
