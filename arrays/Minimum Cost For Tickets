@@ -1,0 +1,40 @@
+// Problem: 983. Minimum Cost For Tickets
+// Platform: LeetCode
+// Link: https://leetcode.com/problems/minimum-cost-for-tickets/submissions/1850888626/
+// Category: Dynamic Programming
+// Difficulty: Medium
+// Time Complexity: O(365) ~ O(1)
+// Space Complexity: O(365) ~ O(1)
+// Approach: Dynamic Programming (Day-based DP)
+// - We use a dp array where dp[i] represents the minimum cost to cover travel up to day i.
+// - If day i is NOT a travel day → dp[i] = dp[i-1].
+// - If day i IS a travel day:
+//      dp[i] = min(
+//          dp[i-1] + cost[0],          // 1-day pass
+//          dp[i-7] + cost[1],          // 7-day pass
+//          dp[i-30] + cost[2]          // 30-day pass
+//      )
+// - We handle negative indices safely by treating them as 0.
+// - Final answer is dp[lastTravelDay].
+// - This works efficiently because max days = 365.
+
+class Solution {
+    public int mincostTickets(int[] days, int[] costs) {
+        int num=days.length;
+        int dp[]=new int[days[num-1]+1];
+        int d=0;
+        for(int i=1;i<=days[num-1];i++){
+            if(d<num && days[d]==i){
+                int day=dp[i-1]+costs[0];
+                int week=dp[Math.max((i-7),0)]+costs[1];
+                int month=dp[Math.max((i-30),0)]+costs[2];
+                dp[i]=Math.min(day,Math.min(week,month));
+                d++;
+            }
+            else{
+                dp[i]=dp[i-1];
+            }
+        }
+        return dp[days[num-1]];
+    }
+}
