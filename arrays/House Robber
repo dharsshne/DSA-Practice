@@ -1,0 +1,27 @@
+// Problem: 198. House Robber
+// Platform: LeetCode
+// link: https://leetcode.com/problems/house-robber/submissions/1850899855/
+// Category: Dynamic Programming
+// Difficulty: Medium
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+// Approach: Space Optimized DP
+// - At each house, choose between robbing it or skipping it.
+// - If we rob current, we add its value to previous skip.
+// - We keep updating two variables instead of full DP array.
+
+class Solution {
+    public int rob(int[] nums) {
+       int n = nums.length;
+       int maxarr[]=new int[n];
+       if(n==1){
+        return nums[0];
+       }
+       maxarr[0]=nums[0];
+       maxarr[1]=Math.max(nums[0],nums[1]);
+       for(int i=2;i<n;i++){
+          maxarr[i]=Math.max(maxarr[i-1],maxarr[i-2]+nums[i]);
+       }
+       return maxarr[n-1];
+    }
+}
