@@ -1,0 +1,35 @@
+// Problem: 64. Minimum Path Sum
+// Platform: LeetCode
+// Link: https://leetcode.com/problems/minimum-path-sum/submissions/1851723136/
+// Category: Dynamic Programming
+// Difficulty: Medium
+// Time Complexity: O(m * n)
+// Space Complexity: O(m * n)
+// Approach: Dynamic Programming (Grid DP)
+// - We create a DP matrix where dp[i][j] stores the minimum sum to reach that cell.
+// - First row: only reachable from the left.
+// - First column: only reachable from the top.
+// - For every other cell:
+//   dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])
+// - The final answer is stored in dp[m-1][n-1].
+
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int R=grid.length;
+        int C=grid[0].length;
+        int [][]dp=new int[R][C];
+        dp[0][0]=grid[0][0];
+        for(int i=1;i<C;i++){
+            dp[0][i]=grid[0][i]+dp[0][i-1];
+        }
+        for(int j=1;j<R;j++){
+            dp[j][0]=grid[j][0]+dp[j-1][0];
+        }
+        for(int i=1;i<R;i++){
+            for(int j=1;j<C;j++){
+                dp[i][j]=grid[i][j]+Math.min(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        return dp[R-1][C-1];
+    }
+}
