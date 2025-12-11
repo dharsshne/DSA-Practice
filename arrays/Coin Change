@@ -1,0 +1,35 @@
+// Problem: 322. Coin Change
+// Platform: LeetCode
+// Link: https: https://leetcode.com/problems/coin-change/submissions/1852512366/
+// Category: Dynamic Programming
+// Difficulty: Medium
+// Time Complexity: O(amount * number_of_coins)
+// Space Complexity: O(amount)
+// Approach: Bottom-Up Dynamic Programming (Unbounded Knapsack)
+// - We create a dp[] array where dp[x] = minimum coins required to make amount x.
+// - Initialize dp[] with a large value (infinity) and set dp[0] = 0 (0 coins to make amount 0).
+// - For each coin, we update dp for all amounts >= coin:
+//       dp[i] = min(dp[i], dp[i - coin] + 1)
+// - If dp[amount] is still infinity after filling, return -1 (not possible).
+// - Otherwise, dp[amount] is the minimum coins required.
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n=coins.length;
+        int dp[][]=new int[n+1][amount+1];
+        for(int r=1;r<=amount;r++){
+            dp[0][r]=amount+1;
+        }
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=amount;j++){
+                if(j>=coins[i-1]){
+                    dp[i][j]=Math.min(1+dp[i][j-coins[i-1]],dp[i-1][j]);
+                }
+                else{
+                    dp[i][j]=dp[i-1][j];
+                }
+            }
+        }
+        return (dp[n][amount]==amount+1)?-1:dp[n][amount];
+    }
+}
