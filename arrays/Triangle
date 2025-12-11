@@ -1,0 +1,30 @@
+// Problem: 120. Triangle
+// Platform: LeetCode
+// Link: https://leetcode.com/problems/triangle/submissions/1852578891/
+// Category: Dynamic Programming
+// Difficulty: Medium
+// Time Complexity: O(n^2)
+// Space Complexity: O(n)
+// Approach: Bottom-Up DP (1D Optimization)
+// - Start from the last row of the triangle and store it in a 1D dp array.
+// - For each row (moving upwards):
+//     dp[j] = triangle[i][j] + min(dp[j], dp[j+1])
+// - This represents choosing the minimum path from the two adjacent numbers below.
+// - Finally, dp[0] will hold the minimum path sum from top to bottom.
+// - This optimized version uses only O(n) space instead of O(n^2).
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int row=triangle.size();
+        int dp[]=new int[row];
+        for(int j=0;j<row;j++){
+            dp[j]=triangle.get(row-1).get(j);
+        }
+        for(int i=row-2;i>=0;i--){
+            for(int j=0;j<=i;j++){
+                dp[j]=triangle.get(i).get(j)+Math.min(dp[j],dp[j+1]);
+            }
+        }
+        return dp[0];
+    }
+}
