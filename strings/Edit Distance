@@ -1,0 +1,41 @@
+// Problem: 72. Edit Distance
+// Platform: LeetCode
+// Link: https://leetcode.com/problems/edit-distance/submissions/1853384844/
+// Category: Dynamic Programming
+// Difficulty: Medium
+// Time Complexity: O(m * n)
+// Space Complexity: O(m * n)
+// Approach: Classic Edit Distance DP
+// - dp[i][j] represents minimum operations to convert
+//   word1[0...i-1] to word2[0...j-1].
+// - If characters match → take diagonal value.
+// - If not → 1 + min(insert, delete, replace).
+// - Base cases:
+//   dp[i][0] = i  (delete all characters)
+//   dp[0][j] = j  (insert all characters)
+// - Final answer: dp[m][n]
+
+class Solution {
+    public int minDistance(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+        int[][] dp = new int[m+1][n+1];
+        for(int i=1;i<=m;i++){
+            dp[i][0] = i;
+        }
+        for(int j=1;j<=n;j++){
+            dp[0][j] = j;
+        }
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(word1.charAt(i-1)==word2.charAt(j-1)){
+                    dp[i][j]=dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j]=Math.min(dp[i-1][j-1],Math.min(dp[i-1][j],dp[i][j-1]))+1;
+                }
+            }
+        }
+    return dp[m][n];
+    }
+}
