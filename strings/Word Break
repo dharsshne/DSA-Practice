@@ -1,0 +1,34 @@
+// Problem: 139. Word Break
+// Platform: LeetCode
+// Link: https://leetcode.com/problems/word-break/
+// Category: Dynamic Programming, Strings
+// Difficulty: Medium
+// Time Complexity: O(n * k)   // n = length of s, k = number of words in dictionary
+// Space Complexity: O(n)
+// Approach:
+// - Use a boolean DP array `vis[]` where vis[i] indicates whether s[0...i-1] can be segmented.
+// - vis[0] = true (empty string is always valid).
+// - For each position i in the string:
+//      iterate through each word w in wordDict:
+//         let start = i - w.length()
+//         if start >= 0 AND vis[start] is true AND substring(start, i) equals w,
+//         then mark vis[i] = true.
+// - Break early when a valid segmentation ending at i is found.
+// - Final result is vis[s.length()] indicating if full string can be broken.
+
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean[] vis=new boolean[s.length()+1];
+        vis[0]=true;
+        for(int i=1;i<=s.length();i++){
+            for(String w:wordDict){
+                int start=i-w.length();
+                if(start>=0 && vis[start] && s.substring(start,i).equals(w)){
+                    vis[i]=true;
+                    break;
+                }
+            }
+        }
+        return vis[s.length()];
+    }
+}
